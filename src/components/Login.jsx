@@ -65,11 +65,6 @@ const Login = () => {
                         placeholder='Introduce la contraseña'
                         type='password'
                     />
-                    {/* <input
-                        className='btn btn-dark btn-block mt-4'
-                        value='Registrar usuario'
-                        type='submit'
-                    /> */}
                 </form>
                 <input
                         onClick={LoginUser}

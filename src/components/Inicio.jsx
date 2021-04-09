@@ -109,12 +109,7 @@ const Inicio = () => {
             })
 
             //Elimina colleccion usuario
-            await db.collection('inquilinos').doc(id).delete();
-/*             await db.collection("inquilinos").doc(id).delete().then(() => {
-                console.log("Document inquilinos successfully deleted!");
-            }).catch((error) => {
-                console.error("Error removing document inquilinos: ", error);
-            });  */
+            await db.collection('inquilinos').doc(id).delete()
         }
     }
     
