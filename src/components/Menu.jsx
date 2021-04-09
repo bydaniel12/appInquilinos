@@ -30,7 +30,7 @@ const Menu = () => {
                         {
                             user ?
                             (
-                                <Link className='nav-link' to='/'>Inicio</Link>
+                                <Link className='nav-link' to='/inicio'>Inicio</Link>
                             )
                             :
                             (

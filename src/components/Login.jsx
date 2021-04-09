@@ -32,7 +32,7 @@ const Login = () => {
         auth.signInWithEmailAndPassword(user,pass)
             .then ( r => {
                 setMsgError('')
-                historial.push('/')
+                historial.push('/inicio')
             })
             .catch(error => {
                 console.log(error)
