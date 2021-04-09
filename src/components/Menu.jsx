@@ -25,7 +25,7 @@ const Menu = () => {
     return (
         <div>
             <nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
-                <ul className='navbar-nav mr-auto'>7
+                <ul className='navbar-nav mr-auto'>
                     <li>
                         {
                             user ?
