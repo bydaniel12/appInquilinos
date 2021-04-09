@@ -29,7 +29,15 @@ const Login = () => {
     }
 
     const LoginUser = () => {
-        auth.signInWithEmailAndPassword(user,pass)
+
+        if (user === ''){
+            setMsgError('Ingrese el email con formato correcto')
+            return;
+        }else if (pass === ''){
+            setMsgError('Ingrese la contraseña')
+            return;
+        }else{
+            auth.signInWithEmailAndPassword(user,pass)
             .then ( r => {
                 setMsgError('')
                 historial.push('/inicio')
@@ -42,7 +50,11 @@ const Login = () => {
                 if (error.code === 'auth/user-not-found'){
                     setMsgError('El usuario no existe')
                 }
-            })    
+                if (error.code === 'auth/invalid-email'){
+                    setMsgError('Usuario o contraseña incorrectos')
+                }
+            }) 
+        }
     }
     
     
@@ -56,7 +68,7 @@ const Login = () => {
                     <input
                         onChange={(e) => {setUser(e.target.value)}}
                         className='form-control mt-4'
-                        placeholder='Introduce el usuario'
+                        placeholder='Introduce el email'
                         type='email'
                     />
                      <input
