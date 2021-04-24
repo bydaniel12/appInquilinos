@@ -198,6 +198,7 @@ const Detalle = () => {
                         className='btn btn-primary mt-3'
                         onClick={calcularKilowats}
                         type="button"
+                        disabled={currentId !== '' ? true : false}
                         value='Calcular' />
                     <input 
                         className='form-control mt-3'
@@ -335,8 +336,16 @@ const Detalle = () => {
                                 <div className='custom-kilowats'>Calculo kw : {detail.mesxkilowats}</div>
                                 <div className='alert-link'>Monto de la Luz : S/{detail.montoxkilowats} </div>
                                 <div className='alert-link'>Monto del Agua : S/{detail.agua} </div>
-                                <div className='alert-link'>Monto de Internet : S/{detail.internet} </div>
-                                {detail.deuda !== '' ?
+                                {Number(detail.internet) > 0 && detail.internet !== '' ?
+                                    (
+                                        <div className='alert-link'>Monto de Internet : S/{detail.internet} </div>
+                                    )
+                                    :
+                                    (
+                                        <div></div>
+                                    )
+                                }
+                                {detail.deuda !== '' && Number(detail.deuda) > 0?
                                     (
                                         <div className='alert-link'>Monto de Deuda : S/{detail.deuda} </div>
                                     )
