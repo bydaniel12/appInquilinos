@@ -348,23 +348,26 @@ const Detalle = () => {
             <div className="">
                 {
                     detalle.map(detail => (
-                        <div className='card' key={detail.id}>
+                        <div className='' key={detail.id}>
                             <div className='p-1'>
-                                <div className={detail.active ? 'alert alert-success' : 'alert alert-primary'}>
-                                    <h4 className='alert-link'>{nombre}  -  {detail.dia}-{detail.mes}-{detail.ano}</h4>
-                                    <div className="custom-control custom-checkbox my-1 mr-sm-2">
-                                        <input
-                                            defaultChecked={detail.pagado ? true : false}
-                                            onClick={checkPay}
-                                            type="checkbox"
-                                            className="custom-control-input"
-                                            id={'check_' + detail.id}
-                                            value="" />
-                                        <label className="custom-control-label alert-link" htmlFor={'check_' + detail.id}>
-                                            Pagado
-                                    </label>
+                                <div className={detail.active ? 'card bg-custom bg-light mb-3' : 'card bg-light mb-3'}>
+                                    <div className='card-header alert-link p2 head-bg-custom'>
+                                        {nombre}  -  {detail.dia}-{detail.mes}-{detail.ano}
+                                        <div className="custom-control custom-checkbox my-1 mr-sm-2">
+                                            <input
+                                                defaultChecked={detail.pagado ? true : false}
+                                                onClick={checkPay}
+                                                type="checkbox"
+                                                className="custom-control-input"
+                                                id={'check_' + detail.id}
+                                                value="" />
+                                            <label className="custom-control-label alert-link" htmlFor={'check_' + detail.id}>
+                                                Pagado
+                                            </label>
+                                        </div>
                                     </div>
-
+                                    
+                                    <div className="card-body">
                                     <div className='alert-link'>Monto Mensual : S/{monto}</div>
                                     <div className='custom-kilowats'>Kilowats : {detail.kilowats}</div>
                                     <div className='custom-kilowats'>Calculo kw : {detail.mesxkilowats}</div>
@@ -400,15 +403,17 @@ const Detalle = () => {
                                     <div className='alert-link custom-total'>
                                         Monto de Total a pagar :
                                         S/
-                                    {Number(monto) +
+                                            {Number(monto) +
                                             Number(detail.montoxkilowats) +
                                             Number(detail.agua) +
                                             Number(detail.internet) +
                                             (detail.deuda !== '' ? Number(detail.deuda) : Number(0))}
                                     </div>
+                                    </div>
                                     <button
-                                        className='btn btn-primary mr-2 mt-1'
-                                        onClick={() => setCurrentId(detail.id)}>Editar</button>
+                                        className='btn btn-primary mr-2 mt-1 m-3'
+                                        onClick={() => setCurrentId(detail.id)}>Editar
+                                    </button>
                                 </div>
                             </div>
                         </div>

@@ -41,6 +41,9 @@
   font-weight: 600;
   color: #5255f1;
 }
+.bg-custom .head-bg-custom{
+  background-color: skyblue;
+}
 
 @keyframes App-logo-spin {
   from {
