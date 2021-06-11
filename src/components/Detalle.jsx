@@ -139,7 +139,13 @@ const Detalle = () => {
                 detalle.forEach(doc => {
                     if (doc.active) {
                         const calcKilowats = Number(values.kilowats) - doc.kilowats;
-                        const montoTotal = Number.parseFloat(calcKilowats * 0.77).toFixed(0);
+                        var montoTotal = 0;
+                        if (doc.dni === '22222222'){
+                            //Daniela
+                            montoTotal = Number.parseFloat(calcKilowats * 0.8).toFixed(0);
+                        }else{
+                            montoTotal = Number.parseFloat(calcKilowats * 0.77).toFixed(0);
+                        }
                         setValues({ ...values, mesxkilowats: calcKilowats.toString(), montoxkilowats: montoTotal.toString() })
                     }
                 })
