@@ -48,6 +48,12 @@ const Detalle = () => {
         } else if (!values.agua) {
             setError("ingresa el monto del Agua")
             return;
+        } else if (!Number(values.agua)) {
+            setError("Ingresa un valor númerico en el campo agua")
+            return;
+        } else if (!Number(values.deuda)) {
+            setError("Ingresa un valor númerico en el campo deuda")
+            return;
         }
         else if (!values.ano) {
             setError("Selecciona el año")
@@ -132,7 +138,7 @@ const Detalle = () => {
 
 
     const calcularKilowats = () => {
-        if (values.kilowats) {
+        if (values.kilowats && Number(values.kilowats)) {
             if (detalle.length === 0) {
                 setValues({ ...values, mesxkilowats: '0', montoxkilowats: '0' })
             } else if (detalle.length > 0) {
@@ -153,7 +159,7 @@ const Detalle = () => {
             }
             setError('')
         } else {
-            setError("Ingresa un valor en el campo kilowats")
+            setError("Ingresa un valor numerico en el campo kilowats")
         }
     }
 
@@ -389,7 +395,7 @@ const Detalle = () => {
                                             <div></div>
                                         )
                                     }
-                                    {detail.deuda !== '' && Number(detail.deuda) > 0 ?
+                                    {detail.deuda !== '' && Number(detail.deuda) ?
                                         (
                                             <div className='alert-link'>Monto de Deuda : S/{detail.deuda} </div>
                                         )
