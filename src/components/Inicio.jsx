@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom';
-import { db } from '../firebaseconfig'
+import { db } from '../firebaseconfig';
+import {toast} from 'react-toastify';
 
 const Inicio = () => {
 
@@ -76,12 +77,15 @@ const Inicio = () => {
             }else{
                 setError('')
                 if (currentId === ''){
-                    await db.collection('inquilinos').doc(values.dni).set(values)
-                    setValues({...initValues})
+                    await db.collection('inquilinos').doc(values.dni).set(values);
+                    toast.success("Usuario Creado!");
+                    setValues({...initValues});
                 }else{
-                    await db.collection('inquilinos').doc(values.dni).update(values)
-                    setCurrentId('')
+                    await db.collection('inquilinos').doc(values.dni).update(values);
+                    setCurrentId('');
+                    toast.success("Usuario actualizado!");
                 }
+                
             }
         } catch (error) {
             console.error(error)
@@ -109,7 +113,9 @@ const Inicio = () => {
             })
 
             //Elimina colleccion usuario
-            await db.collection('inquilinos').doc(id).delete()
+            await db.collection('inquilinos').doc(id).delete();
+
+            toast.error("Usuario eliminado! :(");
         }
     }
     

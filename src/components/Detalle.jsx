@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
-import { db } from '../firebaseconfig'
+import { db } from '../firebaseconfig';
+import {toast} from 'react-toastify';
 
 const Detalle = () => {
     const { dni, nombre, monto } = useParams();
@@ -16,7 +17,7 @@ const Detalle = () => {
         montoxkilowats: '',
         agua: '',
         internet: '',
-        deuda: '',
+        deuda: '0',
         comentario: '',
         pagado: false
     }
@@ -78,14 +79,16 @@ const Detalle = () => {
                         })
                     }
                 })
-                await db.collection('detalleInquilino').doc().set(values)
-                setValues({ ...initValues })
+                await db.collection('detalleInquilino').doc().set(values);
+                setValues({ ...initValues });
+                toast.success("Boleta creada!");
             } else {
                 await db.collection('detalleInquilino').doc(currentId).update(values)
                 document.getElementById('kilowats').readOnly = false;
                 document.getElementById('mesxkilowats').readOnly = false;
                 document.getElementById('montoxkilowats').readOnly = false;
-                setCurrentId('')
+                setCurrentId('');
+                toast.success("Boleta actualizada!");
             }
             document.getElementById("ano").value = "";
             document.getElementById("mes").value = "";
@@ -163,24 +166,30 @@ const Detalle = () => {
         }
     }
 
-    const checkPay = (e) => {
-        const strId = e.target.id;
-        const isChecked = document.getElementById(strId).checked;
-        const id = strId.split("_")[1];
-        if (isChecked) {
-            console.log("pagamos...")
-            db.collection('detalleInquilino').doc(id).update({
-                pagado: true
-            }).catch(error => {
-                console.log("Error al cambiar estado a pagado : " + error)
-            })
-        } else {
-            console.log("Desactivamos el pago")
-            db.collection('detalleInquilino').doc(id).update({
-                pagado: false
-            }).catch(error => {
-                console.log("Error al cambiar estado a pagado : " + error)
-            })
+    const checkPay = (idBoleta, ano , mes, dia) => {
+        const isCheckPay = document.getElementById("check_" + idBoleta).checked;
+        if (window.confirm('Estas seguro de actualizar el pago de la fecha ' + dia + '-' + mes + '-' + ano + ' ?')){
+            if (isCheckPay) {
+                console.log("pago OK!")
+                db.collection('detalleInquilino').doc(idBoleta).update({
+                    pagado: true
+                }).catch(error => {
+                    console.log("Error al cambiar estado a pagado : " + error)
+                })
+            } else {
+                console.log("Desactivamos el pago")
+                db.collection('detalleInquilino').doc(idBoleta).update({
+                    pagado: false
+                }).catch(error => {
+                    console.log("Error al cambiar estado a pagado : " + error)
+                })
+            }
+        }else{
+            if (isCheckPay) {
+                document.getElementById("check_" + idBoleta).checked=false;
+            }else{
+                document.getElementById("check_" + idBoleta).checked=true;
+            }
         }
     }
 
@@ -192,16 +201,16 @@ const Detalle = () => {
 
                 <form onSubmit={registrarDetalle}>
                     <div className="card card-body">
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="dni">DNI</label>
-                                <input type="text" class="form-control" id="dni" name="dni" value={dni} placeholder="Ingresa DNI" readOnly />
+                        <div className="form-row">
+                            <div className="form-group col-md-6">
+                                <label htmlFor="dni">DNI</label>
+                                <input type="text" className="form-control" id="dni" name="dni" value={dni} placeholder="Ingresa DNI" readOnly />
                             </div>
-                            <div class="form-group col-md-6">
-                                <label for="kilowats">Kilowats</label>
+                            <div className="form-group col-md-6">
+                                <label htmlFor="kilowats">Kilowats</label>
                                 <input 
                                     type="text" 
-                                    class="form-control" 
+                                    className="form-control" 
                                     id="kilowats" 
                                     name="kilowats" 
                                     value={values.kilowats} 
@@ -216,8 +225,8 @@ const Detalle = () => {
                                 disabled={currentId !== '' ? true : false}
                                 value='Calcular' />
                         </div>
-                        <div class="form-group">
-                            <label for="mesxkilowats">Kilowats calculado</label>
+                        <div className="form-group">
+                            <label htmlFor="mesxkilowats">Kilowats calculado</label>
                             <input
                                 className='form-control'
                                 onChange={handleChangeInput}
@@ -228,8 +237,8 @@ const Detalle = () => {
                                 readOnly
                                 value={values.mesxkilowats} />
                         </div>
-                        <div class="form-group">
-                            <label for="montoxkilowats">Luz</label>
+                        <div className="form-group">
+                            <label htmlFor="montoxkilowats">Luz</label>
                             <input
                                 className='form-control'
                                 onChange={handleChangeInput}
@@ -240,8 +249,8 @@ const Detalle = () => {
                                 readOnly
                                 value={values.montoxkilowats} />
                         </div>
-                        <div class="form-group">
-                            <label for="agua">Agua</label>
+                        <div className="form-group">
+                            <label htmlFor="agua">Agua</label>
                             <input
                                 className='form-control'
                                 onChange={handleChangeInput}
@@ -251,8 +260,8 @@ const Detalle = () => {
                                 id="agua"
                                 value={values.agua} />
                         </div>
-                        <div class="form-group">
-                            <label for="internet">Internet</label>
+                        <div className="form-group">
+                            <label htmlFor="internet">Internet</label>
                             <input
                                 className='form-control'
                                 onChange={handleChangeInput}
@@ -262,8 +271,8 @@ const Detalle = () => {
                                 id="internet"
                                 value={values.internet} />
                         </div>
-                        <div class="form-group">
-                            <label for="internet">Deuda</label>
+                        <div className="form-group">
+                            <label htmlFor="internet">Deuda</label>
                             <input
                                 className='form-control'
                                 onChange={handleChangeInput}
@@ -273,8 +282,8 @@ const Detalle = () => {
                                 id="deuda"
                                 value={values.deuda} />
                         </div>
-                        <div class="form-group">
-                            <label for="comentario">Comentario</label>
+                        <div className="form-group">
+                            <label htmlFor="comentario">Comentario</label>
                             <input
                                 className='form-control'
                                 onChange={handleChangeInput}
@@ -284,9 +293,9 @@ const Detalle = () => {
                                 id="comnetario"
                                 value={values.comentario} />
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="ano">Año</label>
+                        <div className="form-row">
+                            <div className="form-group col-md-4">
+                                <label htmlFor="ano">Año</label>
                                 <select
                                     onChange={handleChangeInput}
                                     className='form-control'
@@ -304,8 +313,8 @@ const Detalle = () => {
                                     <option value="2029">2029</option>
                                 </select>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label for="mes">Mes</label>
+                            <div className="form-group col-md-6">
+                                <label htmlFor="mes">Mes</label>
                                 <select
                                     onChange={handleChangeInput}
                                     className='form-control'
@@ -326,8 +335,8 @@ const Detalle = () => {
                                 </select>
                             </div>
                             
-                            <div class="form-group col-md-2">
-                                <label for="dia">Dia</label>
+                            <div className="form-group col-md-2">
+                                <label htmlFor="dia">Dia</label>
                                 <input
                                     className='form-control'
                                     onChange={handleChangeInput}
@@ -369,7 +378,7 @@ const Detalle = () => {
                                         <div className="custom-control custom-checkbox my-1 mr-sm-2">
                                             <input
                                                 defaultChecked={detail.pagado ? true : false}
-                                                onClick={checkPay}
+                                                onClick={() => checkPay(detail.id, detail.ano, detail.mes, detail.dia)}
                                                 type="checkbox"
                                                 className="custom-control-input"
                                                 id={'check_' + detail.id}

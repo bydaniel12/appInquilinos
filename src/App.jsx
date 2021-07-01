@@ -6,10 +6,23 @@ import Menu from './components/Menu';
 import BusquedaxDni from './components/BusquedaxDni';
 import BusquedaxFecha from './components/BusquedaxFecha';
 import Detalle from './components/Detalle';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <div className="App">
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <Router>
           <Menu></Menu>
           <Switch>
