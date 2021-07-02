@@ -49,11 +49,8 @@ const Detalle = () => {
         } else if (!values.agua) {
             setError("ingresa el monto del Agua")
             return;
-        } else if (!Number(values.agua)) {
+        } else if (Number(values.agua) < 0) {
             setError("Ingresa un valor númerico en el campo agua")
-            return;
-        } else if (!Number(values.deuda)) {
-            setError("Ingresa un valor númerico en el campo deuda")
             return;
         }
         else if (!values.ano) {
