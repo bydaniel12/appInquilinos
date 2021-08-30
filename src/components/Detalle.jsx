@@ -149,9 +149,9 @@ const Detalle = () => {
                         if (doc.dni === '22222222' || doc.dni === '33334444'){
                             //Daniela
                             //Jaime casa
-                            montoTotal = Number.parseFloat(calcKilowats * 0.8).toFixed(0);
+                            montoTotal = Number.parseFloat(calcKilowats * 0.9).toFixed(0);
                         }else{
-                            montoTotal = Number.parseFloat(calcKilowats * 0.77).toFixed(0);
+                            montoTotal = Number.parseFloat(calcKilowats * 0.88).toFixed(0);
                         }
                         setValues({ ...values, mesxkilowats: calcKilowats.toString(), montoxkilowats: montoTotal.toString() })
                     }
