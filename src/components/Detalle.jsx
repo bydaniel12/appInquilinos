@@ -151,7 +151,7 @@ const Detalle = () => {
                             //Jaime casa
                             montoTotal = Number.parseFloat(calcKilowats * 0.9).toFixed(0);
                         }else{
-                            montoTotal = Number.parseFloat(calcKilowats * 0.88).toFixed(0);
+                            montoTotal = Number.parseFloat(calcKilowats * 0.85).toFixed(0);
                         }
                         setValues({ ...values, mesxkilowats: calcKilowats.toString(), montoxkilowats: montoTotal.toString() })
                     }
