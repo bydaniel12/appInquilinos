@@ -146,9 +146,10 @@ const Detalle = () => {
                     if (doc.active) {
                         const calcKilowats = Number(values.kilowats) - doc.kilowats;
                         var montoTotal = 0;
-                        if (doc.dni === '22222222' || doc.dni === '33334444'){
+                        if (doc.dni === '22222222' || doc.dni === '33334444' || doc.dni === '33333333'){
                             //Daniela
                             //Jaime casa
+                            //Katty
                             montoTotal = Number.parseFloat(calcKilowats * 0.9).toFixed(0);
                         }else{
                             montoTotal = Number.parseFloat(calcKilowats * 0.85).toFixed(0);
