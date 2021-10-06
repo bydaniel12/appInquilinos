@@ -9,9 +9,7 @@ const Detalle = () => {
     const initValues = {
         dni: dni,
         active: true,
-        ano: '',
-        mes: '',
-        dia: '',
+        fecha: '',
         kilowats: '',
         mesxkilowats: '',
         montoxkilowats: '',
@@ -52,17 +50,8 @@ const Detalle = () => {
         } else if (Number(values.agua) < 0) {
             setError("Ingresa un valor númerico en el campo agua")
             return;
-        }
-        else if (!values.ano) {
-            setError("Selecciona el año")
-            return;
-        }
-        else if (!values.mes) {
-            setError("Selecciona el mes")
-            return;
-        }
-        else if (!values.dia) {
-            setError("Selecciona el día")
+        } else if (!values.fecha) {
+            setError("ingresa la fecha del recibo")
             return;
         } else {
             console.log(values)
@@ -87,8 +76,6 @@ const Detalle = () => {
                 setCurrentId('');
                 toast.success("Boleta actualizada!");
             }
-            document.getElementById("ano").value = "";
-            document.getElementById("mes").value = "";
             setError('')
         }
     }
@@ -105,8 +92,7 @@ const Detalle = () => {
                 document.getElementById('kilowats').readOnly = true;
                 document.getElementById('mesxkilowats').readOnly = true;
                 document.getElementById('montoxkilowats').readOnly = true;
-                document.getElementById("ano").value = doc.data().ano;
-                document.getElementById("mes").value = doc.data().mes;
+                document.getElementById("fecha").value = doc.data().fecha;
             } else {
                 // doc.data() will be undefined in this case
                 console.log("No such document!");
@@ -164,9 +150,11 @@ const Detalle = () => {
         }
     }
 
-    const checkPay = (idBoleta, ano , mes, dia) => {
+    const checkPay = (idBoleta, paramFecha) => {
         const isCheckPay = document.getElementById("check_" + idBoleta).checked;
-        if (window.confirm('Estas seguro de actualizar el pago de la fecha ' + dia + '-' + mes + '-' + ano + ' ?')){
+        const fecha = new Date(paramFecha);
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        if (window.confirm('Estas seguro de actualizar el pago con Fecha : ' + fecha.toLocaleDateString("es-ES", options) + ' ?')){
             if (isCheckPay) {
                 console.log("pago OK!")
                 db.collection('detalleInquilino').doc(idBoleta).update({
@@ -191,6 +179,11 @@ const Detalle = () => {
         }
     }
 
+    const formatDate = (paramFecha) =>{
+        const fecha = new Date(paramFecha);
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return fecha.toLocaleDateString("es-ES", options);
+    }
 
     return (
         <div className='container  p-3'>
@@ -291,60 +284,16 @@ const Detalle = () => {
                                 id="comnetario"
                                 value={values.comentario} />
                         </div>
-                        <div className="form-row">
-                            <div className="form-group col-md-4">
-                                <label htmlFor="ano">Año</label>
-                                <select
-                                    onChange={handleChangeInput}
-                                    className='form-control'
-                                    name="ano" id="ano">
-                                    <option value="">Elegi el año</option>
-                                    <option value="2020">2020</option>
-                                    <option value="2021">2021</option>
-                                    <option value="2022">2022</option>
-                                    <option value="2023">2023</option>
-                                    <option value="2024">2024</option>
-                                    <option value="2025">2025</option>
-                                    <option value="2026">2026</option>
-                                    <option value="2027">2027</option>
-                                    <option value="2028">2028</option>
-                                    <option value="2029">2029</option>
-                                </select>
-                            </div>
-                            <div className="form-group col-md-6">
-                                <label htmlFor="mes">Mes</label>
-                                <select
-                                    onChange={handleChangeInput}
-                                    className='form-control'
-                                    name="mes" id="mes">
-                                    <option value="">Elegi el mes</option>
-                                    <option value="01">Enero</option>
-                                    <option value="02">Febrero</option>
-                                    <option value="03">Marzo</option>
-                                    <option value="04">Abril</option>
-                                    <option value="05">Mayo</option>
-                                    <option value="06">Junio</option>
-                                    <option value="07">Julio</option>
-                                    <option value="08">Agosto</option>
-                                    <option value="09">Septiembre</option>
-                                    <option value="10">Octubre</option>
-                                    <option value="11">Noviembre</option>
-                                    <option value="12">Diciembre</option>
-                                </select>
-                            </div>
-                            
-                            <div className="form-group col-md-2">
-                                <label htmlFor="dia">Dia</label>
-                                <input
-                                    className='form-control'
-                                    onChange={handleChangeInput}
-                                    placeholder='Ingresa el día'
-                                    type="text"
-                                    name="dia"
-                                    id="dia"
-                                    maxLength="2"
-                                    value={values.dia} />
-                            </div>
+                        <div className="form-group">
+                            <label htmlFor="fecha">Fecha</label>
+                            <input
+                                className='form-control'
+                                onChange={handleChangeInput}
+                                placeholder='Ingresa la fecha del recibo'
+                                type="date"
+                                name="fecha"
+                                id="fecha"
+                                value={values.fecha} />
                         </div>
                         <button className='btn btn-primary btn-block mt-3'>
                             {currentId === '' ? 'Registrar Boleta' : 'Actualizar Boleta'}
@@ -372,11 +321,11 @@ const Detalle = () => {
                             <div className='p-1'>
                                 <div className={detail.active ? 'card bg-custom bg-light mb-3' : 'card bg-light mb-3'}>
                                     <div className='card-header alert-link p2 head-bg-custom'>
-                                        {nombre}  -  {detail.dia}-{detail.mes}-{detail.ano}
+                                        {nombre}  :  {formatDate(detail.fecha)}
                                         <div className="custom-control custom-checkbox my-1 mr-sm-2">
                                             <input
                                                 defaultChecked={detail.pagado ? true : false}
-                                                onClick={() => checkPay(detail.id, detail.ano, detail.mes, detail.dia)}
+                                                onClick={() => checkPay(detail.id, detail.fecha)}
                                                 type="checkbox"
                                                 className="custom-control-input"
                                                 id={'check_' + detail.id}

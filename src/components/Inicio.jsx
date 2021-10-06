@@ -124,6 +124,12 @@ const Inicio = () => {
         const {name, value} = e.target
         setValues({...values, [name]: value})
     }
+
+    const formatDate = (paramFecha) =>{
+        const fecha = new Date(paramFecha);
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return fecha.toLocaleDateString("es-ES", options);
+    }
     
 
     return (
@@ -211,7 +217,7 @@ const Inicio = () => {
                             <div className='card-body'>
                                 <div className='d-block'>
                                     <h4 className=''>{us.nombre} {us.apellido} - {us.dni}</h4>
-                                    <div className=''>{us.fechaIngreso}</div>
+                                    <div className=''>{formatDate(us.fechaIngreso)}</div>
                                     <div className=''> Monto mensual : S/{us.monto}</div>
                                     <div className=''>Garantia : S/{us.garantia}</div>
                                     <button 

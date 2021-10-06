@@ -4,8 +4,8 @@ import { db } from '../firebaseconfig';
 const BusquedaxFecha = () => {
 
     const [values , setValues] = useState({
-        ano: '',
-        mes: ''
+        fechaIni: '',
+        fechaFin: ''
     })
 
     const [detalle, setDetalle] = useState([]);
@@ -18,18 +18,18 @@ const BusquedaxFecha = () => {
     const buscarxFecha = (e) => {
         e.preventDefault();
 
-        if (!values.ano){
-            setError("Selecciona el año")
+        if (!values.fechaIni){
+            setError("Selecciona una Fecha Inicial")
             setDetalle([])
             setLuz('')
             return;
-        }else if (!values.mes){
-            setError("Selecciona el mes")
+        }else if (!values.fechaFin){
+            setError("Selecciona una Fecha Fin")
             setDetalle([])
             setLuz('')
             return;
         }else{
-            db.collection("detalleInquilino").where("ano", "==", values.ano).where("mes", "==", values.mes)
+            db.collection("detalleInquilino").where("fecha", ">=", values.fechaIni).where("fecha", "<=",values.fechaFin)
             .get()
             .then((querySnapshot) => {
                 const docs = []
@@ -58,47 +58,54 @@ const BusquedaxFecha = () => {
         setValues({...values, [name]: value})
     }
 
+    const getNombre = (paramDni) => {
+        var nombre = paramDni;
+        if (paramDni === '10018841'){
+            nombre = "Honorato";
+        }else if (paramDni === '11111111'){
+            nombre = "Thalia";
+        }else if (paramDni === '11112222'){
+            nombre = "Fritz";
+        }else if (paramDni ==='22222222'){
+            nombre = "Daniela";
+        }else if (paramDni === '33333333'){
+            nombre = "Katty";
+        }else if (paramDni === '33334444'){
+            nombre = "Jaime Depa";
+        }else if (paramDni === '44444444'){
+            nombre = "Jaime Taller";
+        }
+        return nombre
+    }
+
     return (
         <div className='container  p-3'>
             <div className="row">
                 <form onSubmit={buscarxFecha} className='card card-body'>
-                <h2>Busqueda por fecha</h2>
+                <h2>Selecciona el rango Fecha</h2>
                     <div className="form-group">
-                        <select 
-                            onChange={handleChangeInput}
-                            className='form-control mt-3'
-                            name="ano" id="ano">
-                            <option value="">Elegi el año</option>
-                            <option value="2020">2020</option>
-                            <option value="2021">2021</option>
-                            <option value="2022">2022</option>
-                            <option value="2023">2023</option>
-                            <option value="2024">2024</option>
-                            <option value="2025">2025</option>
-                            <option value="2026">2026</option>
-                            <option value="2027">2027</option>
-                            <option value="2028">2028</option>
-                            <option value="2029">2029</option>
-                        </select>
-
-                        <select 
-                            onChange={handleChangeInput}
-                            className='form-control mt-3'
-                            name="mes" id="mes">
-                            <option value="">Elegi el mes</option>
-                            <option value="01" name="01">Enero</option>
-                            <option value="02">Febrero</option>
-                            <option value="03">Marzo</option>
-                            <option value="04">Abril</option>
-                            <option value="05">Mayo</option>
-                            <option value="06">Junio</option>
-                            <option value="07">Julio</option>
-                            <option value="08">Agosto</option>
-                            <option value="09">Septiembre</option>
-                            <option value="10">Octubre</option>
-                            <option value="11" name="11">Noviembre</option>
-                            <option value="12">Diciembre</option>
-                        </select>
+                        <div className="form-group">
+                            <label htmlFor="fechaIni">Fecha Inicial</label>
+                            <input
+                                className='form-control'
+                                onChange={handleChangeInput}
+                                placeholder='Ingresa la Fecha Inicial'
+                                type="date"
+                                name="fechaIni"
+                                id="fechaIni"
+                                value={values.fechaIni} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="fechaFin">Fecha Fin</label>
+                            <input
+                                className='form-control'
+                                onChange={handleChangeInput}
+                                placeholder='Ingresa la Fecha Fin'
+                                type="date"
+                                name="fechaFin"
+                                id="fechaFin"
+                                value={values.fechaFin} />
+                        </div>
                         <button className='btn btn-primary btn-block mt-3'>
                             Buscar
                         </button>
@@ -172,8 +179,8 @@ const BusquedaxFecha = () => {
                             <div className='card' key={us.id}>
                                 <div className='p-1'>
                                     <div className={us.active? 'alert alert-success' : 'alert alert-primary'}>
-                                        <div className='alert-link'><span className=''>Dni : </span>  {us.dni}</div>
-                                        <div className='alert-link'><span className=''>Fecha : </span>  {us.ano} - {us.mes} - {us.dia}</div>
+                                        <div className='alert-link'><span className=''>Dni : </span>  {getNombre(us.dni)}</div>
+                                        <div className='alert-link'><span className=''>Fecha : </span>  {us.fecha}</div>
                                         <div className='alert-link'><span>Kilowats Registrado : </span>  {us.kilowats}</div>
                                         <div className='alert-link'><span>Kilowats calculado : </span>  {us.mesxkilowats}</div>
                                         <div className='alert-link'>Monto de la Luz : S/{us.montoxkilowats} </div>
