@@ -89,7 +89,6 @@ const BusquedaxFecha = () => {
                             <input
                                 className='form-control'
                                 onChange={handleChangeInput}
-                                placeholder='Ingresa la Fecha Inicial'
                                 type="date"
                                 name="fechaIni"
                                 id="fechaIni"
@@ -100,7 +99,6 @@ const BusquedaxFecha = () => {
                             <input
                                 className='form-control'
                                 onChange={handleChangeInput}
-                                placeholder='Ingresa la Fecha Fin'
                                 type="date"
                                 name="fechaFin"
                                 id="fechaFin"

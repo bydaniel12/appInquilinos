@@ -289,7 +289,6 @@ const Detalle = () => {
                             <input
                                 className='form-control'
                                 onChange={handleChangeInput}
-                                placeholder='Ingresa la fecha del recibo'
                                 type="date"
                                 name="fecha"
                                 id="fecha"

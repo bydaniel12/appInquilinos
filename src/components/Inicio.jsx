@@ -186,7 +186,6 @@ const Inicio = () => {
                         <input 
                             className='form-control mt-3'
                             onChange={handleChangeInput}
-                            placeholder='fecha de ingreso'
                             type="date" 
                             name="fechaIngreso"
                             id="fechaIngreso"
