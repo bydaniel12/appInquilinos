@@ -184,7 +184,6 @@ const Detalle = () => {
         const fecha = new Date(paramFecha);
         //const options = { year: 'numeric', month: 'long', day: 'numeric' };
         //return fecha.toLocaleDateString(undefined, options);
-        moment.locale('es-PE');
         return moment(fecha).format("DD MMMM YYYY");
     }
 

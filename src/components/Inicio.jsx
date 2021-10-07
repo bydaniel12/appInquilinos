@@ -130,7 +130,6 @@ const Inicio = () => {
 
     const formatDate = (paramFecha) =>{
         const fecha = new Date(paramFecha);
-        moment.locale('es-PE');
         return moment(fecha).format("DD MMMM YYYY");
     }
 
