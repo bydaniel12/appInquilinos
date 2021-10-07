@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { db } from '../firebaseconfig';
 import {toast} from 'react-toastify';
 import moment from 'moment';
+import 'moment/locale/es';
 
 const Inicio = () => {
 
@@ -130,6 +131,7 @@ const Inicio = () => {
 
     const formatDate = (paramFecha) =>{
         const fecha = new Date(paramFecha);
+        moment.locale("es_PE");
         return moment(fecha).format("DD MMMM YYYY");
     }
 
