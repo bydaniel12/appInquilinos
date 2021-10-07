@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom';
 import { db } from '../firebaseconfig';
 import {toast} from 'react-toastify';
-import dateFormat from "dateformat";
+import moment from 'moment';
 
 const Inicio = () => {
 
@@ -15,7 +15,7 @@ const Inicio = () => {
         apellido : '',
         monto : '',
         garantia : '',
-        fechaIngreso : dateFormat(fecha, "yyyy-mm-dd")
+        fechaIngreso : moment(fecha).format("YYYY-MM-DD")
     }
 
     const [values , setValues] = useState(initValues)
@@ -130,7 +130,8 @@ const Inicio = () => {
 
     const formatDate = (paramFecha) =>{
         const fecha = new Date(paramFecha);
-        return dateFormat(fecha, "dd mmmm yyyy")
+        moment.locale('es-PE');
+        return moment(fecha).format("DD MMMM YYYY");
     }
 
     return (
