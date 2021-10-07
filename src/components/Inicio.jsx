@@ -2,11 +2,12 @@ import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom';
 import { db } from '../firebaseconfig';
 import {toast} from 'react-toastify';
+import dateFormat from "dateformat";
 
 const Inicio = () => {
 
-    const d = new Date();
-    const fechaActual = d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2);
+    const fecha = new Date();
+    //const fechaActual = d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2);
 
     const initValues = {
         dni : '',
@@ -14,7 +15,7 @@ const Inicio = () => {
         apellido : '',
         monto : '',
         garantia : '',
-        fechaIngreso : fechaActual
+        fechaIngreso : dateFormat(fecha, "yyyy-mm-dd")
     }
 
     const [values , setValues] = useState(initValues)
@@ -129,8 +130,7 @@ const Inicio = () => {
 
     const formatDate = (paramFecha) =>{
         const fecha = new Date(paramFecha);
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        return fecha.toLocaleDateString(undefined, options);
+        return dateFormat(fecha, "dd mmmm yyyy")
     }
 
     return (
