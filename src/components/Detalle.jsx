@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import { db } from '../firebaseconfig';
 import {toast} from 'react-toastify';
-import moment from 'moment';
+//import moment from 'moment';
 
 const Detalle = () => {
     const { dni, nombre, monto } = useParams();
@@ -181,10 +181,11 @@ const Detalle = () => {
     }
 
     const formatDate = (paramFecha) =>{
-        const fecha = new Date(paramFecha);
+        //const fecha = new Date(paramFecha);
         //const options = { year: 'numeric', month: 'long', day: 'numeric' };
         //return fecha.toLocaleDateString(undefined, options);
-        return moment(fecha).format("DD MMMM YYYY");
+        //return moment(fecha).format("DD MMMM YYYY");
+        return paramFecha;
     }
 
     return (
