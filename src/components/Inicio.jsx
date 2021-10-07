@@ -5,13 +5,16 @@ import {toast} from 'react-toastify';
 
 const Inicio = () => {
 
+    const d = new Date();
+    const fechaActual = d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2);
+
     const initValues = {
         dni : '',
         nombre : '',
         apellido : '',
         monto : '',
         garantia : '',
-        fechaIngreso : ''
+        fechaIngreso : fechaActual
     }
 
     const [values , setValues] = useState(initValues)
@@ -184,10 +187,7 @@ const Inicio = () => {
                         <input 
                             className='form-control mt-3'
                             onChange={handleChangeInput}
-                            type="text"
-                            onFocus={(e) => e.target.type = 'date'}
-                            onBlur={(e) => e.target.type = 'text'}
-                            placeholder="Ingresa la Fecha de Ingreso"
+                            type="date"
                             name="fechaIngreso"
                             id="fechaIngreso"
                             value={values.fechaIngreso} />
