@@ -8,8 +8,6 @@ import 'moment/locale/es';
 const Inicio = () => {
 
     const fecha = new Date();
-    //const fechaActual = d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2);
-
     const initValues = {
         dni : '',
         nombre : '',
