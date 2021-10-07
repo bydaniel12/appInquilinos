@@ -130,7 +130,7 @@ const Inicio = () => {
     const formatDate = (paramFecha) =>{
         const fecha = new Date(paramFecha);
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        return fecha.toLocaleDateString("es-ES", options);
+        return fecha.toLocaleDateString("es-PE", options);
     }
 
     return (
