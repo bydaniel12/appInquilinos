@@ -3,18 +3,16 @@ import { Link } from 'react-router-dom';
 import { db } from '../firebaseconfig';
 import {toast} from 'react-toastify';
 import moment from 'moment';
-import 'moment/locale/es';
 
 const Inicio = () => {
-
-    const fecha = new Date();
+    
     const initValues = {
         dni : '',
         nombre : '',
         apellido : '',
         monto : '',
         garantia : '',
-        fechaIngreso : moment(fecha).format("YYYY-MM-DD")
+        fechaIngreso : moment(new Date()).format("YYYY-MM-DD")
     }
 
     const [values , setValues] = useState(initValues)

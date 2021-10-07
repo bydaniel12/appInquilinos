@@ -1,11 +1,12 @@
 import React, {useState} from 'react'
 import { db } from '../firebaseconfig';
+import moment from 'moment';
 
 const BusquedaxFecha = () => {
 
     const [values , setValues] = useState({
-        fechaIni: '',
-        fechaFin: ''
+        fechaIni: moment(new Date()).format("YYYY-MM-DD"),
+        fechaFin: moment(new Date()).format("YYYY-MM-DD")
     })
 
     const [detalle, setDetalle] = useState([]);
@@ -177,7 +178,7 @@ const BusquedaxFecha = () => {
                             <div className='card' key={us.id}>
                                 <div className='p-1'>
                                     <div className={us.active? 'alert alert-success' : 'alert alert-primary'}>
-                                        <div className='alert-link'><span className=''>Dni : </span>  {getNombre(us.dni)}</div>
+                                        <div className='alert-link'><span className=''>Usuario: </span>  {getNombre(us.dni)}</div>
                                         <div className='alert-link'><span className=''>Fecha : </span>  {us.fecha}</div>
                                         <div className='alert-link'><span>Kilowats Registrado : </span>  {us.kilowats}</div>
                                         <div className='alert-link'><span>Kilowats calculado : </span>  {us.mesxkilowats}</div>

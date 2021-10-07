@@ -8,6 +8,7 @@ import BusquedaxFecha from './components/BusquedaxFecha';
 import Detalle from './components/Detalle';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import 'moment/locale/es';
 
 function App() {
   return (

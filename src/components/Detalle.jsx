@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import { db } from '../firebaseconfig';
 import {toast} from 'react-toastify';
 import moment from 'moment';
-import 'moment/locale/es';
 
 const Detalle = () => {
     const { dni, nombre, monto } = useParams();
@@ -11,7 +10,7 @@ const Detalle = () => {
     const initValues = {
         dni: dni,
         active: true,
-        fecha: '',
+        fecha: moment(new Date()).format("YYYY-MM-DD"),
         kilowats: '',
         mesxkilowats: '',
         montoxkilowats: '',
@@ -134,13 +133,15 @@ const Detalle = () => {
                     if (doc.active) {
                         const calcKilowats = Number(values.kilowats) - doc.kilowats;
                         var montoTotal = 0;
-                        if (doc.dni === '22222222' || doc.dni === '33334444' || doc.dni === '33333333'){
-                            //Daniela
+                        if (doc.dni === '33334444' || doc.dni === '33333333'){
                             //Jaime casa
                             //Katty
                             montoTotal = Number.parseFloat(calcKilowats * 0.9).toFixed(0);
-                        }else{
+                        }else if (doc.dni === '22222222'){
+                            //Daniela
                             montoTotal = Number.parseFloat(calcKilowats * 0.85).toFixed(0);
+                        }else{
+                            montoTotal = Number.parseFloat(calcKilowats * 0.80).toFixed(0);
                         }
                         setValues({ ...values, mesxkilowats: calcKilowats.toString(), montoxkilowats: montoTotal.toString() })
                     }
