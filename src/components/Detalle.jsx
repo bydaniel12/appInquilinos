@@ -182,7 +182,7 @@ const Detalle = () => {
     const formatDate = (paramFecha) =>{
         const fecha = new Date(paramFecha);
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        return fecha.toLocaleDateString("es-PE", options);
+        return fecha.toLocaleDateString(undefined, options);
     }
 
     return (
