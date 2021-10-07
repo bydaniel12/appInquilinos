@@ -130,9 +130,7 @@ const Inicio = () => {
     }
 
     const formatDate = (paramFecha) =>{
-        const fecha = new Date(paramFecha);
-        moment.locale("es_PE");
-        return moment(fecha).format("DD MMMM YYYY");
+        return moment(paramFecha).format("DD MMMM YYYY");
     }
 
     return (
