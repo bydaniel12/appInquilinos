@@ -5,7 +5,6 @@ import {toast} from 'react-toastify';
 
 const Inicio = () => {
 
-    
     const initValues = {
         dni : '',
         nombre : '',
@@ -130,7 +129,6 @@ const Inicio = () => {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
         return fecha.toLocaleDateString("es-ES", options);
     }
-    
 
     return (
         <div className='container  p-3'>
@@ -186,7 +184,10 @@ const Inicio = () => {
                         <input 
                             className='form-control mt-3'
                             onChange={handleChangeInput}
-                            type="date" 
+                            type="text"
+                            onFocus={(e) => e.target.type = 'date'}
+                            onBlur={(e) => e.target.type = 'text'}
+                            placeholder="Ingresa la Fecha de Ingreso"
                             name="fechaIngreso"
                             id="fechaIngreso"
                             value={values.fechaIngreso} />
