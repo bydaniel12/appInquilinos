@@ -6,6 +6,7 @@ import Menu from './components/Menu';
 import BusquedaxDni from './components/BusquedaxDni';
 import BusquedaxFecha from './components/BusquedaxFecha';
 import Detalle from './components/Detalle';
+import CalculoLuzAgua from './components/CalculoLuzAgua';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'moment/locale/es';
@@ -33,6 +34,7 @@ function App() {
             <Route path='/login' component={Login}></Route>
             <Route path='/BusquedaxDni' component={BusquedaxDni}></Route>
             <Route path='/BusquedaxFecha' component={BusquedaxFecha}></Route>
+            <Route path='/CalculoLuzAgua' component={CalculoLuzAgua}></Route>
             <Route path='/Detalle/:dni/:nombre/:monto' >
               <Detalle />
             </Route>

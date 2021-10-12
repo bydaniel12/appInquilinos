@@ -66,6 +66,19 @@ const Menu = () => {
                         }
                          
                     </li>
+                    <li>
+                        {
+                            user ?
+                            (
+                                <Link className='nav-link' to='/CalculoLuzAgua'>Calcular luz y agua previo</Link>
+                            )
+                            :
+                            (
+                                <span></span>
+                            )
+                        }
+                         
+                    </li>
                 </ul>
 
                 {
