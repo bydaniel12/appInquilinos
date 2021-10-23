@@ -3,6 +3,9 @@ import { useParams } from 'react-router-dom';
 import { db } from '../firebaseconfig';
 import {toast} from 'react-toastify';
 import moment from 'moment';
+import BasicModal from '../components/BasicModal';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import EditIcon from '@mui/icons-material/Edit';
 
 const Detalle = () => {
     const { dni, nombre, monto } = useParams();
@@ -20,6 +23,10 @@ const Detalle = () => {
         comentario: '',
         pagado: false
     }
+
+    const [showModal, setShowModal] = useState(false);
+
+    const [dataBoleto, setDataBoleto] = useState([]);
 
     const [values, setValues] = useState(initValues)
 
@@ -187,6 +194,11 @@ const Detalle = () => {
         return moment(paramFecha).format("DD MMMM YYYY");
     }
 
+    const handleOpen = (data) =>{
+        setShowModal(true);
+        setDataBoleto(data);
+    } 
+
     return (
         <div className='container  p-3'>
             <h1>Detalle de {nombre}</h1>
@@ -318,11 +330,12 @@ const Detalle = () => {
             <div className="">
                 {
                     detalle.map(detail => (
-                        <div className='' key={detail.id}>
+                        <div className={'doc_' + detail.id} key={detail.id}>
                             <div className='p-1'>
                                 <div className={detail.active ? 'card bg-custom bg-light mb-3' : 'card bg-light mb-3'}>
                                     <div className='card-header alert-link p2 head-bg-custom'>
                                         {nombre}  :  {formatDate(detail.fecha)}
+                                        <VisibilityIcon  onClick={() => handleOpen(detail)} className="ml-3" />
                                         <div className="custom-control custom-checkbox my-1 mr-sm-2">
                                             <input
                                                 defaultChecked={detail.pagado ? true : false}
@@ -334,63 +347,224 @@ const Detalle = () => {
                                             <label className="custom-control-label alert-link" htmlFor={'check_' + detail.id}>
                                                 Pagado
                                             </label>
+                                            <EditIcon  onClick={() => setCurrentId(detail.id)} className="ml-3" />
                                         </div>
                                     </div>
-                                    
+
                                     <div className="card-body">
-                                    <div className='alert-link'>Monto Mensual : S/{monto}</div>
-                                    <div className='custom-kilowats'>Kilowats : {detail.kilowats}</div>
-                                    <div className='custom-kilowats'>Calculo kw : {detail.mesxkilowats}</div>
-                                    <div className='alert-link'>Monto de la Luz : S/{detail.montoxkilowats} </div>
-                                    <div className='alert-link'>Monto del Agua : S/{detail.agua} </div>
-                                    {Number(detail.internet) > 0 && detail.internet !== '' ?
-                                        (
-                                            <div className='alert-link'>Monto de Internet : S/{detail.internet} </div>
-                                        )
-                                        :
-                                        (
-                                            <div></div>
-                                        )
-                                    }
-                                    {detail.deuda !== '' && Number(detail.deuda) ?
-                                        (
-                                            <div className='alert-link'>Monto de Deuda : S/{detail.deuda} </div>
-                                        )
-                                        :
-                                        (
-                                            <div></div>
-                                        )
-                                    }
-                                    {detail.comentario !== '' ?
-                                        (
-                                            <div className='custom-comentario'>{detail.comentario} </div>
-                                        )
-                                        :
-                                        (
-                                            <div></div>
-                                        )
-                                    }
-                                    <div className='alert-link custom-total'>
-                                        Monto de Total a pagar :
-                                        S/
-                                            {Number(monto) +
-                                            Number(detail.montoxkilowats) +
-                                            Number(detail.agua) +
-                                            Number(detail.internet) +
-                                            (detail.deuda !== '' ? Number(detail.deuda) : Number(0))}
+                                        <ol className="list-group list-group-numbered">
+                                            <li className="custom-kilowats d-flex justify-content-between align-items-start">
+                                                <div className="ms-2 me-auto">
+                                                Kilowats :
+                                                </div>
+                                                <div>{detail.kilowats}</div>
+                                            </li>
+                                            <li className="custom-kilowats d-flex justify-content-between align-items-start">
+                                                <div className="ms-2 me-auto">
+                                                Calculo kw :
+                                                </div>
+                                                <div>{detail.mesxkilowats}</div>
+                                            </li>
+                                            <li className="alert-link d-flex justify-content-between align-items-start">
+                                                <div className="ms-2 me-auto">
+                                                Monto Mensual : 
+                                                </div>
+                                                <div> S/{monto}</div>
+                                            </li>
+                                            <li className="alert-link d-flex justify-content-between align-items-start">
+                                                <div className="ms-2 me-auto">
+                                                Monto de la Luz :
+                                                </div>
+                                                <div>S/{detail.montoxkilowats}</div>
+                                            </li>
+                                            <li className="alert-link d-flex justify-content-between align-items-start">
+                                                <div className="ms-2 me-auto">
+                                                Monto del Agua :
+                                                </div>
+                                                <div>S/{detail.agua}</div>
+                                            </li>
+                                            {Number(detail.internet) > 0 && detail.internet !== '' ?
+                                                (
+                                                    <li className="alert-link d-flex justify-content-between align-items-start">
+                                                        <div className="ms-2 me-auto">
+                                                        Monto de Internet :
+                                                        </div>
+                                                        <div>S/{detail.internet} </div>
+                                                    </li>
+                                                )
+                                                :
+                                                (
+                                                    <li className="hide"></li>
+                                                )
+                                            }
+
+                                            {detail.deuda !== '' && Number(detail.deuda) ?
+                                                (
+                                                    <li className="alert-link d-flex justify-content-between align-items-start">
+                                                        <div className="ms-2 me-auto">
+                                                            Monto de Deuda :
+                                                        </div>
+                                                        <div>S/{detail.deuda}</div>
+                                                    </li>
+                                                )
+                                                :
+                                                (
+                                                    <li className="hide"></li>
+                                                )
+                                            }
+                                            {detail.comentario !== '' ?
+                                                (
+                                                    <li className="custom-comentario alert-link d-flex align-items-start">
+                                                        <div className="ms-2 me-auto ">
+                                                        </div>
+                                                        <div>{detail.comentario}</div>
+                                                    </li>
+                                                )
+                                                :
+                                                (
+                                                    <li className="hide"></li>
+                                                )
+                                            }
+                                        </ol>
                                     </div>
+                                    <div className="card-footer">
+                                        <ol className="list-group list-group-numbered">
+                                            <li className="alert-link d-flex justify-content-between align-items-start">
+                                                <div className="ms-2 me-auto">
+                                                Total a pagar :
+                                                </div>
+                                                <div>S/
+                                                    {Number(monto) +
+                                                    Number(detail.montoxkilowats) +
+                                                    Number(detail.agua) +
+                                                    Number(detail.internet) +
+                                                    (detail.deuda !== '' ? Number(detail.deuda) : Number(0))}
+                                                </div>
+                                            </li>
+                                        </ol>
                                     </div>
-                                    <button
-                                        className='btn btn-primary mr-2 mt-1 m-3'
-                                        onClick={() => setCurrentId(detail.id)}>Editar
-                                    </button>
                                 </div>
                             </div>
                         </div>
                     ))
                 }
             </div>
+            <BasicModal open={showModal} setOpen={setShowModal} title="Detalle Boleta" >
+                <div className='container  p-3'>
+                    <div className='p-1'>
+                        <div className={dataBoleto.active ? 'card bg-custom bg-light mb-3' : 'card bg-light mb-3'}>
+                            <div className='card-header alert-link p2 head-bg-custom text-center'>
+                                {nombre}  :  {formatDate(dataBoleto.fecha)}
+                                <div className="custom-control custom-checkbox my-1 mr-sm-2 text-center">
+                                    <input
+                                        defaultChecked={dataBoleto.pagado ? true : false}
+                                        type="checkbox"
+                                        className="custom-control-input"
+                                        disabled
+                                        id={'check2_' + dataBoleto.id}
+                                        value="" />
+                                    <label className="custom-control-label alert-link" htmlFor={'check2_' + dataBoleto.id}>
+                                        Pagado
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div className="card-body">
+                                <ol className="list-group list-group-numbered">
+                                    <li className="custom-kilowats d-flex justify-content-between align-items-start">
+                                        <div className="ms-2 me-auto">
+                                        Kilowats :
+                                        </div>
+                                        <div>{dataBoleto.kilowats}</div>
+                                    </li>
+                                    <li className="custom-kilowats d-flex justify-content-between align-items-start">
+                                        <div className="ms-2 me-auto">
+                                        Calculo kw :
+                                        </div>
+                                        <div>{dataBoleto.mesxkilowats}</div>
+                                    </li>
+                                    <li className="alert-link d-flex justify-content-between align-items-start">
+                                        <div className="ms-2 me-auto">
+                                        Monto Mensual : 
+                                        </div>
+                                        <div> S/{monto}</div>
+                                    </li>
+                                    <li className="alert-link d-flex justify-content-between align-items-start">
+                                        <div className="ms-2 me-auto">
+                                        Monto de la Luz :
+                                        </div>
+                                        <div>S/{dataBoleto.montoxkilowats}</div>
+                                    </li>
+                                    <li className="alert-link d-flex justify-content-between align-items-start">
+                                        <div className="ms-2 me-auto">
+                                        Monto del Agua :
+                                        </div>
+                                        <div>S/{dataBoleto.agua}</div>
+                                    </li>
+                                    {Number(dataBoleto.internet) > 0 && dataBoleto.internet !== '' ?
+                                        (
+                                            <li className="alert-link d-flex justify-content-between align-items-start">
+                                                <div className="ms-2 me-auto">
+                                                Monto de Internet :
+                                                </div>
+                                                <div>S/{dataBoleto.internet} </div>
+                                            </li>
+                                        )
+                                        :
+                                        (
+                                            <li className="hide"></li>
+                                        )
+                                    }
 
+                                    {dataBoleto.deuda !== '' && Number(dataBoleto.deuda) ?
+                                        (
+                                            <li className="alert-link d-flex justify-content-between align-items-start">
+                                                <div className="ms-2 me-auto">
+                                                    Monto de Deuda :
+                                                </div>
+                                                <div>S/{dataBoleto.deuda}</div>
+                                            </li>
+                                        )
+                                        :
+                                        (
+                                            <li className="hide"></li>
+                                        )
+                                    }
+                                    {dataBoleto.comentario !== '' ?
+                                        (
+                                            <li className="custom-comentario alert-link d-flex align-items-start">
+                                                <div className="ms-2 me-auto ">
+                                                </div>
+                                                <div>{dataBoleto.comentario}</div>
+                                            </li>
+                                        )
+                                        :
+                                        (
+                                            <li className="hide"></li>
+                                        )
+                                    }
+                                </ol>
+                            </div>
+                            <div className="card-footer">
+                                <ol className="list-group list-group-numbered">
+                                    <li className="alert-link d-flex justify-content-between align-items-start">
+                                        <div className="ms-2 me-auto">
+                                        Total a pagar :
+                                        </div>
+                                        <div>S/
+                                            {Number(monto) +
+                                            Number(dataBoleto.montoxkilowats) +
+                                            Number(dataBoleto.agua) +
+                                            Number(dataBoleto.internet) +
+                                            (dataBoleto.deuda !== '' ? Number(dataBoleto.deuda) : Number(0))}
+                                        </div>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </BasicModal>
         </div>
     )
 }

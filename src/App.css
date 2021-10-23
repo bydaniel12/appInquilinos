@@ -44,6 +44,18 @@
 .bg-custom .head-bg-custom{
   background-color: skyblue;
 }
+.hide{
+  display: none;
+}
+.navBarCustom{
+  text-align: left !important;
+}
+@media (max-width: 600px){
+  .navbar .container-fluid{
+    display: block !important;
+  }
+}
+
 
 @keyframes App-logo-spin {
   from {
