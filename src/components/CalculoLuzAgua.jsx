@@ -60,7 +60,7 @@ const CalculoLuzAgua = () => {
             }
         });
 
-        if (kilowatsTotal !== "" && error){
+        if (kilowatsTotal !== "" && !error){
             if (Number(puntos) > 0 && Number(kilowatsTotal) > 0.0 ){
                 montoTotalLuz = Number.parseFloat(kilowatsTotal) * Number.parseFloat(puntos);
                 alert("El monto total de la luz es : " + montoTotalLuz.toFixed(0));
