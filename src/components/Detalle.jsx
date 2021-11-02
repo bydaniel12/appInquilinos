@@ -119,7 +119,7 @@ const Detalle = () => {
         }
 
         const getDetallexDni = async () => {
-            db.collection('detalleInquilino').where("dni", "==", dni).orderBy("kilowats", "desc").onSnapshot(querySnapshot => {
+            db.collection('detalleInquilino').where("dni", "==", dni).orderBy("kilowats", "desc").limit(6).onSnapshot(querySnapshot => {
                 const docs = [];
                 querySnapshot.forEach(doc => {
                     docs.push({ ...doc.data(), id: doc.id })

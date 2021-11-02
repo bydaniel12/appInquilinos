@@ -1,13 +1,16 @@
 
 import React, {useState, useEffect} from 'react';
 import { db } from '../firebaseconfig';
-import {toast} from 'react-toastify';
 import moment from 'moment';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 
 const CalculoLuzAgua = () => {
 
     const [detalle, setDetalle] = useState([]);
     const [data, setData] = useState([]);
+    const [error, setError] = useState('');
+    //const [body, setBody] = useState({});
 
     const formatDate = (paramFecha) =>{
         return moment(paramFecha).format("DD MMMM YYYY");
@@ -35,27 +38,36 @@ const CalculoLuzAgua = () => {
         getUsers();
     }, []);
 
-    const calcularKilowats = () => {
+    const handleChangeInput = (e) => {
+        setError('');
+        /*
+        setBody({
+            ...body,
+            [e.target.id] : e.target.value
+        })
+        */
+    }
+
+    const calcularKilowats = (e) => {
         var kilowats="";
         var kilowatsTotal = "";
         var montoTotalLuz = "";
         const puntos = document.getElementById("puntos").value;
-        console.log(detalle);
         var error = false;
+        setError('');
         data.forEach(doc =>{
             const kilowatsOld = document.getElementById("kilowatsOld_"+doc.dni).value;
             const kilowatsNew = document.getElementById("kilowatsNew_"+doc.dni).value;
-            if (Number(kilowatsOld) > 0.0 && Number(kilowatsNew) > 0.0 ) {
-                kilowats = Number(kilowatsNew) - Number(kilowatsOld);
-                if (Number(kilowats) > 0.0){
+            if ( Number(kilowatsNew) > 0.0 ) {
+                if ( Number(kilowatsNew) > Number(kilowatsOld) ){
+                    kilowats = Number(kilowatsNew) - Number(kilowatsOld);
                     kilowatsTotal = Number(kilowatsTotal) + Number(kilowats);
-                    console.log(kilowatsTotal);
                 }else{
-                    toast.error("Los kilowats ingresados para el ususario " + doc.nombre + " debe ser mayor!!");
+                    setError("Debe ingresar una cantidad mayor de kilowats para el usuario " + doc.nombre);
                     error = true;
                 }
             }else{
-                toast.error("Ingresa los kilowats mayor a 0 para el usuario " + doc.nombre);
+                setError("Debe ingresar kilowats mayor a 0 para el usuario " + doc.nombre);
                 error = true;
             }
         });
@@ -65,70 +77,74 @@ const CalculoLuzAgua = () => {
                 montoTotalLuz = Number.parseFloat(kilowatsTotal) * Number.parseFloat(puntos);
                 alert("El monto total de la luz es : " + montoTotalLuz.toFixed(0));
             }else{
-                toast.error("Puntos incorrectos");
+                setError("Ocurrio un error en el calculo");
                 return;
             }
         } 
     }
 
     return (
-        <div className='container  p-3'>
+        <div className='container p-3'>
             <h1>Listado Inquilinos</h1>
-            <div className="mt-2">
+
+            <Box component="form" noValidate autoComplete="off"
+                sx={{
+                    '& .MuiTextField-root': { m: 1, width: '15ch' },
+                }}
+                >
+                
                 {
                     data.map(us => (
-                        <div className='card mb-1' key={us.dni}>
-                            <div className='card-body'>
-                                <div className='d-block'>
-                                    <h4 className=''>{us.nombre}</h4>
-                                    <div className="form-group">
-                                        <label htmlFor={"kilowatsOld_" + us.dni}>Kilowats - {formatDate(us.fecha)}</label>
-                                        <input 
-                                            type="number" 
-                                            className="form-control" 
-                                            id={"kilowatsOld_" + us.dni}
-                                            name={"kilowatsOld_" + us.dni}
-                                            defaultValue={us.kilowats}
-                                            readOnly
-                                            placeholder="Ingresa los kilowats" 
-                                             />
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor={"kilowatsNew_" + us.dni}>Kilowats Nuevo</label>
-                                        <input 
-                                            type="number" 
-                                            className="form-control" 
-                                            id={"kilowatsNew_" + us.dni}
-                                            name={"kilowatsNew_" + us.dni}
-                                            defaultValue=""
-                                            placeholder="Ingresa los kilowats" 
-                                             />
-                                    </div>
-
-                                </div>
-                            </div>
+                        <div key={us.dni}>
+                            <TextField
+                                id={"kilowatsOld_" + us.dni}
+                                name={"kilowatsOld_" + us.dni}
+                                label={"Kilowats -  " + us.nombre + " - " + formatDate(us.fecha)}
+                                defaultValue={us.kilowats}
+                                InputProps={{
+                                    readOnly: true,
+                                    }}
+                                disabled
+                            />
+                            <TextField
+                                id={"kilowatsNew_" + us.dni}
+                                name={"kilowatsNew_" + us.dni}
+                                label={"Kw " + us.nombre}
+                                defaultValue = ""
+                                type="number"
+                                onChange={handleChangeInput}
+                            />
                         </div>
                     ))
                 }
-            </div>
+                     <TextField
+                        id="puntos"
+                        name="puntos"
+                        label="puntos"
+                        defaultValue="0.85"
+                        type="number"
+                    />
+                
+                {
+                    error !== '' ? 
+                    (
+                        <div className='alert alert-danger mt-3'>{error}</div>
+                    ) 
+                    :
+                    (
+                        <span></span>
+                    )
+                }
 
-            <div className="form-group">
-                <label htmlFor="puntos">Puntos</label>
-                <input 
-                    type="number" 
-                    className="form-control" 
-                    id="puntos"
-                    name="puntos"
-                    defaultValue="0.85"
-                    placeholder="Puntos" 
-                        />
-            </div>
-            <input
-                className='btn btn-primary col-md-12 mb-3'
-                onClick={calcularKilowats}
-                type="button"
-                value='Calcular' />
+                <input
+                    className='btn btn-primary col-md-12 mb-3'
+                    onClick={calcularKilowats}
+                    type="button"
+                    value='Calcular' />
+                
+            </Box>
         </div>
+
     )
 }
 

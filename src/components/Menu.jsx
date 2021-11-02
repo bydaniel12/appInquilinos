@@ -86,7 +86,7 @@ const Menu = () => {
                             {
                                 user ?
                                 (
-                                    <Link className='nav-link' onClick={CerrarSesion}>Cerrar sesión</Link>
+                                    <Link className='nav-link' onClick={CerrarSesion} to=''>Cerrar sesión</Link>
                                 )
                                 :
                                 (
