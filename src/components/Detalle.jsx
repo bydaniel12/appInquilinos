@@ -142,7 +142,7 @@ const Detalle = () => {
                         var montoTotal = 0;
                         if (doc.dni === '33333333'){
                             //Katty
-                            montoTotal = Number.parseFloat(calcKilowats * 0.9).toFixed(0);
+                            montoTotal = Number.parseFloat(calcKilowats * 0.85).toFixed(0);
                         }else if (doc.dni === '33334444' || doc.dni === '44444444' || doc.dni === '22222222' || doc.dni === '11112222'){
                             //Jaime casa, jaimeTaller, Daniela, fritz
                             montoTotal = Number.parseFloat(calcKilowats * 0.85).toFixed(0);
