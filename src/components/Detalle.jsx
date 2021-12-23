@@ -140,14 +140,14 @@ const Detalle = () => {
                     if (doc.active) {
                         const calcKilowats = Number(values.kilowats) - doc.kilowats;
                         var montoTotal = 0;
-                        if (doc.dni === '33333333'){
-                            //Katty
-                            montoTotal = Number.parseFloat(calcKilowats * 0.85).toFixed(0);
-                        }else if (doc.dni === '33334444' || doc.dni === '44444444' || doc.dni === '22222222' || doc.dni === '11112222'){
-                            //Jaime casa, jaimeTaller, Daniela, fritz
+                        if (doc.dni === '33333333' || doc.dni === '44444444'){
+                            //Katty, jaimeTaller
+                            montoTotal = Number.parseFloat(calcKilowats * 0.9).toFixed(0);
+                        }else if (doc.dni === '33334444'  || doc.dni === '11111111' || doc.dni === '11112222'){
+                            //Jaime casa, Thalia, fritz
                             montoTotal = Number.parseFloat(calcKilowats * 0.85).toFixed(0);
                         }else{
-                            //papa,thalia
+                            //papa, Dany
                             montoTotal = Number.parseFloat(calcKilowats * 0.80).toFixed(0);
                         }
                         setValues({ ...values, mesxkilowats: calcKilowats.toString(), montoxkilowats: montoTotal.toString() })
