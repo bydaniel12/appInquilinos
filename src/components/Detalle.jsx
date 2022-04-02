@@ -140,12 +140,15 @@ const Detalle = () => {
                     if (doc.active) {
                         const calcKilowats = Number(values.kilowats) - doc.kilowats;
                         var montoTotal = 0;
-                        if (doc.dni === '33333333' || doc.dni === '44444444'){
-                            //Katty, jaimeTaller
-                            montoTotal = Number.parseFloat(calcKilowats * 0.9).toFixed(0);
-                        }else if (doc.dni === '33334444'  || doc.dni === '11111111' || doc.dni === '11112222'){
-                            //Jaime casa, Thalia, fritz
+                        if (doc.dni === '33333333'){
+                            // jaimeTaller
+                            montoTotal = Number.parseFloat(calcKilowats * 0.87).toFixed(0);
+                        }else if (doc.dni === '33334444'  || doc.dni === '11111111'){
+                            //Jaime casa, Thalia
                             montoTotal = Number.parseFloat(calcKilowats * 0.85).toFixed(0);
+                        }else if (doc.dni === '10101010'){
+                            // KattyMoises
+                            montoTotal = Number.parseFloat(calcKilowats * 0.82).toFixed(0);
                         }else{
                             //papa, Dany
                             montoTotal = Number.parseFloat(calcKilowats * 0.80).toFixed(0);

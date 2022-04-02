@@ -58,16 +58,11 @@ const CalculoLuzAgua = () => {
         data.forEach(doc =>{
             const kilowatsOld = document.getElementById("kilowatsOld_"+doc.dni).value;
             const kilowatsNew = document.getElementById("kilowatsNew_"+doc.dni).value;
-            if ( Number(kilowatsNew) > 0.0 ) {
-                if ( Number(kilowatsNew) > Number(kilowatsOld) ){
-                    kilowats = Number(kilowatsNew) - Number(kilowatsOld);
-                    kilowatsTotal = Number(kilowatsTotal) + Number(kilowats);
-                }else{
-                    setError("Debe ingresar una cantidad mayor de kilowats para el usuario " + doc.nombre);
-                    error = true;
-                }
+            if ( Number(kilowatsNew) > Number(kilowatsOld) ){
+                kilowats = Number(kilowatsNew) - Number(kilowatsOld);
+                kilowatsTotal = Number(kilowatsTotal) + Number(kilowats);
             }else{
-                setError("Debe ingresar kilowats mayor a 0 para el usuario " + doc.nombre);
+                setError("Debe ingresar una cantidad mayor de kilowats para el usuario " + doc.nombre);
                 error = true;
             }
         });
@@ -124,7 +119,7 @@ const CalculoLuzAgua = () => {
                         defaultValue="0.85"
                         type="number"
                     />
-                
+
                 {
                     error !== '' ? 
                     (
