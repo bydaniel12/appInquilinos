@@ -148,7 +148,7 @@ const Detalle = () => {
                             montoTotal = Number.parseFloat(calcKilowats * 0.85).toFixed(0);
                         }else if (doc.dni === '10101010'){
                             // KattyMoises
-                            montoTotal = Number.parseFloat(calcKilowats * 0.84).toFixed(0);
+                            montoTotal = Number.parseFloat(calcKilowats * 0.85).toFixed(0);
                         }else{
                             //papa, Dany
                             montoTotal = Number.parseFloat(calcKilowats * 0.80).toFixed(0);
