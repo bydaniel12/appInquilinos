@@ -142,16 +142,16 @@ const Detalle = () => {
                         var montoTotal = 0;
                         if (doc.dni === '33333333' || doc.dni === '33334444'){
                             // jaimeTaller, Jaime casa
-                            montoTotal = Number.parseFloat(calcKilowats * 0.87).toFixed(0);
+                            montoTotal = Number.parseFloat(calcKilowats * 0.90).toFixed(0);
                         }else if (doc.dni === '11111111'){
                             //Thalia
-                            montoTotal = Number.parseFloat(calcKilowats * 0.85).toFixed(0);
+                            montoTotal = Number.parseFloat(calcKilowats * 0.87).toFixed(0);
                         }else if (doc.dni === '10101010'){
                             // KattyMoises
-                            montoTotal = Number.parseFloat(calcKilowats * 0.85).toFixed(0);
+                            montoTotal = Number.parseFloat(calcKilowats * 0.87).toFixed(0);
                         }else{
                             //papa, Dany
-                            montoTotal = Number.parseFloat(calcKilowats * 0.80).toFixed(0);
+                            montoTotal = Number.parseFloat(calcKilowats * 0.85).toFixed(0);
                         }
                         setValues({ ...values, mesxkilowats: calcKilowats.toString(), montoxkilowats: montoTotal.toString() })
                     }
