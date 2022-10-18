@@ -143,12 +143,12 @@ const Detalle = () => {
                         if (doc.dni === '33333333' || doc.dni === '33334444'){
                             // jaimeTaller, Jaime casa
                             montoTotal = Number.parseFloat(calcKilowats * 0.90).toFixed(0);
-                        }else if (doc.dni === '11111111'){
+                        }else if (doc.dni === '11111111' || doc.dni === '55555555'){
                             //Thalia
-                            montoTotal = Number.parseFloat(calcKilowats * 0.87).toFixed(0);
+                            montoTotal = Number.parseFloat(calcKilowats * 0.90).toFixed(0);
                         }else if (doc.dni === '10101010'){
                             // KattyMoises
-                            montoTotal = Number.parseFloat(calcKilowats * 0.87).toFixed(0);
+                            montoTotal = Number.parseFloat(calcKilowats * 0.88).toFixed(0);
                         }else{
                             //papa, Dany
                             montoTotal = Number.parseFloat(calcKilowats * 0.85).toFixed(0);
@@ -279,7 +279,7 @@ const Detalle = () => {
                                 value={values.internet} />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="internet">Deuda</label>
+                            <label htmlFor="internet">Garantia o Deuda</label>
                             <input
                                 className='form-control'
                                 onChange={handleChangeInput}
@@ -400,11 +400,25 @@ const Detalle = () => {
                                                 )
                                             }
 
-                                            {detail.deuda !== '' && Number(detail.deuda) ?
+                                            {Number(detail.deuda) && detail.deuda <= 0 ?
                                                 (
                                                     <li className="alert-link d-flex justify-content-between align-items-start">
                                                         <div className="ms-2 me-auto">
                                                             Monto de Deuda :
+                                                        </div>
+                                                        <div>S/{detail.deuda}</div>
+                                                    </li>
+                                                )
+                                                :
+                                                (
+                                                    <li className="hide"></li>
+                                                )
+                                            }
+                                            {Number(detail.deuda) && detail.deuda > 0 ?
+                                                (
+                                                    <li className="alert-link d-flex justify-content-between align-items-start">
+                                                        <div className="ms-2 me-auto">
+                                                            Garantia :
                                                         </div>
                                                         <div>S/{detail.deuda}</div>
                                                     </li>
@@ -518,11 +532,25 @@ const Detalle = () => {
                                         )
                                     }
 
-                                    {dataBoleto.deuda !== '' && Number(dataBoleto.deuda) ?
+                                    { Number(dataBoleto.deuda) && dataBoleto.deuda <= 0 ?
                                         (
                                             <li className="alert-link d-flex justify-content-between align-items-start">
                                                 <div className="ms-2 me-auto">
                                                     Monto de Deuda :
+                                                </div>
+                                                <div>S/{dataBoleto.deuda}</div>
+                                            </li>
+                                        )
+                                        :
+                                        (
+                                            <li className="hide"></li>
+                                        )
+                                    }
+                                    { Number(dataBoleto.deuda) && dataBoleto.deuda > 0 ?
+                                        (
+                                            <li className="alert-link d-flex justify-content-between align-items-start">
+                                                <div className="ms-2 me-auto">
+                                                    Garantia :
                                                 </div>
                                                 <div>S/{dataBoleto.deuda}</div>
                                             </li>

@@ -65,12 +65,12 @@ const BusquedaxFecha = () => {
             nombre = "Honorato";
         }else if (paramDni === '11111111'){
             nombre = "Thalia";
-        }else if (paramDni === '11112222'){
-            nombre = "Fritz";
-        }else if (paramDni ==='22222222'){
-            nombre = "Daniela";
-        }else if (paramDni === '33333333'){
+        }else if (paramDni === '10101010'){
             nombre = "Katty";
+        }else if (paramDni ==='48102737'){
+            nombre = "Dany";
+        }else if (paramDni === '55555555'){
+            nombre = "Max";
         }else if (paramDni === '33334444'){
             nombre = "Jaime Depa";
         }else if (paramDni === '44444444'){
