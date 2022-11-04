@@ -43,12 +43,12 @@ const BusquedaxDni = () => {
             nombre = "Honorato";
         }else if (paramDni === '11111111'){
             nombre = "Thalia";
-        }else if (paramDni === '11112222'){
-            nombre = "Fritz";
-        }else if (paramDni ==='22222222'){
-            nombre = "Daniela";
-        }else if (paramDni === '33333333'){
+        }else if (paramDni === '55555555'){
+            nombre = "Max";
+        }else if (paramDni ==='10101010'){
             nombre = "Katty";
+        }else if (paramDni === '48102737'){
+            nombre = "Dany";
         }else if (paramDni === '33334444'){
             nombre = "Jaime Depa";
         }else if (paramDni === '44444444'){
@@ -111,6 +111,37 @@ const BusquedaxDni = () => {
                                         <div className='alert-link'><span>Kilowats x Mes : </span>  {us.mesxkilowats}</div>
                                         <div className='alert-link'><span>Monto de la Luz : </span>  S/{us.montoxkilowats}</div>
                                         <div className='alert-link'><span>Monto del agua : </span>  S/{us.agua}</div>
+
+                                        {Number(us.deuda) && us.deuda <= 0 ?
+                                                (
+                                                    <div className='alert-link'><span>Monto deuda : </span>  S/{us.deuda}</div>
+                                                )
+                                                :
+                                                (
+                                                    <div className='alert-link'></div>
+                                                )
+                                        }
+
+                                        {Number(us.deuda) && us.deuda > 0 ?
+                                                (
+                                                    <div className='alert-link'><span>Garantia : </span>  S/{us.deuda}</div>
+                                                )
+                                                :
+                                                (
+                                                    <div className='alert-link'></div>
+                                                )
+                                        }
+
+                                        {us.comentario !== '' ?
+                                                (
+                                                    <div className='alert-link'><span>Comentario : </span> {us.comentario}</div>
+                                                )
+                                                :
+                                                (
+                                                    <div className='alert-link'></div>
+                                                )
+                                        }
+
                                         <div className="custom-control custom-checkbox my-1 mr-sm-2">
                                             <input 
                                                 defaultChecked={us.pagado ? true : false}
