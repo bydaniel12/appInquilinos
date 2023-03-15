@@ -145,7 +145,6 @@ const Detalle = () => {
                             montoTotal = Number.parseFloat(calcKilowats * 1.0).toFixed(0);
                         }else if (doc.dni === '11111111' || doc.dni === '55555555'){
                             //Thalia y su hermano
-                            
                             montoTotal = Number.parseFloat(calcKilowats * 1.0).toFixed(0);
                         }else if (doc.dni === '10101010'){
                             // KattyMoises
