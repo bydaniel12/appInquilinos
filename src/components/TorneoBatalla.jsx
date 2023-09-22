@@ -18,6 +18,7 @@ const TorneoBatalla = () => {
     const buscarBatalla = (e) => {
         e.preventDefault()
         try {
+            console.info(values.nick);
             if (!values.nick){
                 setError("Ingresa Mas de un nick por comas ','")
                 return;
@@ -31,21 +32,40 @@ const TorneoBatalla = () => {
                     var indice2 = Math.floor(Math.random() * arrayDeCadenas.length);
                     const luchador2 = arrayDeCadenas[indice2];
                     arrayDeCadenas.splice(indice2, 1);
-                    console.info(luchador1,luchador2);
-                    document.getElementById("nick").value = arrayDeCadenas.toString();
                     var text = luchador1 + "   VS   " + luchador2;
 
                     const resolveAfter3Sec = new Promise(resolve => setTimeout(resolve, 3000));
                     toast.promise(
                         resolveAfter3Sec,
                         {
-                        pending: 'Buscando rivales...',
-                        success: text+'🤯',
-                        error: 'Ocurrio un error'
-                        }
+                            pending: {
+                                render(){
+                                  return "Buscando rivales..."
+                                },
+                                autoClose: 3000,
+                                position: toast.POSITION.TOP_CENTER
+                              },
+                            success: {
+                                render(){
+                                    document.getElementById("nick").value = arrayDeCadenas.toString();
+                                    const li = document.createElement("li");
+                                    li.textContent = text;
+                                    document.getElementById("listId").appendChild(li); 
+                                    return text +' 🤯';
+                                },
+                                autoClose: 3000,
+                                position: toast.POSITION.TOP_CENTER
+                            },
+                            error: {
+                                render(){
+                                    return "Ocurrio un error"
+                                }
+                            }
+                        },
                     )
+                    
                 }else{
-                    var text2 = "El usuario " + arrayDeCadenas.toString() + " no tiene rival.";
+                    var text2 = "El usuario [" + arrayDeCadenas.toString() + "] no tiene rival.";
                     toast.error(text2);
                 }
             }
@@ -66,12 +86,12 @@ const TorneoBatalla = () => {
         <div className='container  p-3'>
             <div className="row">
                 <form onSubmit={buscarBatalla} className='card card-body'>
-                <h2>Registro de Personajes</h2>
+                <h2>Participantes del Gran Torneo!!!</h2>
                     <div className="form-group">
                         <textarea 
                             className='form-control mt-3'
                             onChange={handleChangeInput}
-                            placeholder='Ingresa Nick de personaje con comas'
+                            placeholder='Ingresa Nick de personaje separados por comas'
                             type="text" 
                             name="nick"
                             id="nick"
@@ -94,6 +114,25 @@ const TorneoBatalla = () => {
                         }
                     </div>
                 </form>
+            </div>
+
+
+            <div className="card mt-4">
+                <h2>Lista inicial de participantes</h2>
+                <div className='p-1'>{values.nick}</div>
+                <br></br>
+                <h2>Lista de Batallas</h2>
+                <div className=''>
+                    <div className='p-1'>
+                        <div className='alert alert-primary'>
+                            <ul id="listId" className='alert-link'>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <br></br>
+                <div>Nota: Para resetear los participantes refrescar la web</div>
             </div>
 
         </div>
