@@ -51,9 +51,12 @@ const Menu = () => {
                                 )
                             }
                         </li>
+                        {/** 
                         <li>
                             <Link className='nav-link' to='/BusquedaxDni'>Busca tu Recibo</Link>
                         </li>
+                        **/
+                        }
                         <li>
                             <Link className='nav-link' to='/TorneoBatalla'>Torneo de Batalla Mu elendhir</Link>
                         </li>

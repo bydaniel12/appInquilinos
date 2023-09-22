@@ -7,12 +7,8 @@ const TorneoBatalla = () => {
         nick : ''
     }
 
-
-
     const [values , setValues] = useState(initValues)
-
-    const [detalle, setDetalle] = useState([]);
-
+    
     const [error, setError] = useState('')
 
     const buscarBatalla = (e) => {
