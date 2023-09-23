@@ -50,6 +50,17 @@
 .navBarCustom{
   text-align: left !important;
 }
+.radio-tag {
+  display: inline-block;
+  /* position: relative; */
+  padding: 15px;
+}
+label.torneo-label {
+  margin-left: 5px;
+}
+.bc-blue {
+  background: chocolate;
+}
 @media (max-width: 600px){
   .navbar .container-fluid{
     display: block !important;

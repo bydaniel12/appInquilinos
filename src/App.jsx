@@ -4,6 +4,7 @@ import Inicio from './components/Inicio';
 import Login from './components/Login';
 import Menu from './components/Menu';
 import BusquedaxDni from './components/BusquedaxDni';
+import RegistroTorneo from './components/RegistroTorneo';
 import TorneoBatalla from './components/TorneoBatalla';
 import BusquedaxFecha from './components/BusquedaxFecha';
 import Detalle from './components/Detalle';
@@ -35,6 +36,7 @@ function App() {
             <Route path='/inicio' component={Inicio}></Route>
             <Route path='/login' component={Login}></Route>
             <Route path='/BusquedaxDni' component={BusquedaxDni}></Route>
+            <Route path='/RegistroTorneo' component={RegistroTorneo}></Route>
             <Route path='/TorneoBatalla' component={TorneoBatalla}></Route>
             <Route path='/BusquedaxFecha' component={BusquedaxFecha}></Route>
             <Route path='/CalculoLuzAgua' component={CalculoLuzAgua}></Route>

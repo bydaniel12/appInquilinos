@@ -58,6 +58,9 @@ const Menu = () => {
                         **/
                         }
                         <li>
+                            <Link className='nav-link' to='/RegistroTorneo'>Registro de personajes</Link>
+                        </li>
+                        <li>
                             <Link className='nav-link' to='/TorneoBatalla'>Torneo de Batalla Mu elendhir</Link>
                         </li>
                         <li>
